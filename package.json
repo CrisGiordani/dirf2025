@@ -10,6 +10,14 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^4.21.2"
+    "@prisma/client": "^6.4.1",
+    "docxtemplater": "^3.60.1",
+    "express": "^4.21.2",
+    "libreoffice-convert": "^1.6.0",
+    "pizzip": "^3.1.8",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "prisma": "^6.4.1"
   }
 }

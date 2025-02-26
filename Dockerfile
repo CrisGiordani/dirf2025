@@ -9,18 +9,14 @@ RUN apt-get update && \
 # Define o diretório de trabalho dentro do container
 WORKDIR /app
 
-# Copia os arquivos do projeto para dentro do container
-COPY package.json package-lock.json ./
-COPY prisma ./prisma
+# Copia todos os arquivos do projeto para o container
+COPY . .
 
-# Instala as dependências antes de copiar o restante dos arquivos
+# Instala as dependências do projeto
 RUN npm install
 
 # Gera os arquivos do Prisma
 RUN npx prisma generate
-
-# Copia o restante dos arquivos do projeto
-COPY . .
 
 # Expõe a porta que a aplicação usa (se necessário)
 EXPOSE 3000

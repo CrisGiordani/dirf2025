@@ -26,7 +26,7 @@ async function getDados(request, reply) {
         return reply.status(404).send({ message: "CPF inválido ou não encontrado." });
         }
 
-        const templatePath = path.join(__dirname, "..", "..", "..", "tmp", "DIRF2025.docx");
+        const templatePath = path.join(__dirname, "src", "tmp", "DIRF2025.docx");
         const content = fs.readFileSync(templatePath, "binary");
 
         const zip = new PizZip(content);
@@ -42,7 +42,7 @@ async function getDados(request, reply) {
         doc.render(replacements);
 
         const docxBuffer = doc.getZip().generate({ type: "nodebuffer" });
-        const tempFilePath = path.join("/tmp", "DIRF2025.docx");
+        const tempFilePath = path.join("tmp", "DIRF2025.docx");
         fs.writeFileSync(tempFilePath, docxBuffer);
 
         const pdfBuffer = await new Promise((resolve, reject) => {

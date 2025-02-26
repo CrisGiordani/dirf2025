@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "prisma generate && node src/index.js"
+    "start": "npm install -g npm@11.1.0 && prisma generate && node src/index.js"
   },
   "keywords": [],
   "author": "",

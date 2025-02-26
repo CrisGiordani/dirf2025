@@ -66,10 +66,6 @@ async function getDados(request, reply) {
     }
 }
 
-async function result(app) {
-    app.get("/generate/:cpf", getDados);
-}
-
 const formatCPF = (cpf) => {
     return cpf.replace(/^([0-9]{3})([0-9]{3})([0-9]{3})([0-9]{2})$/, "$1.$2.$3-$4");
 };

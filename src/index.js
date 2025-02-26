@@ -42,7 +42,7 @@ app.get('/generate/:cpf', async (request, reply) => {
           return reply.status(404).send({ message: "CPF inválido ou não encontrado." });
           }
 
-          const templatePath = path.join(process.cwd(), "/tmp", "DIRF2025.docx");
+          const templatePath = path.join(process.cwd(), "src", "/tmp", "DIRF2025.docx");
           const content = fs.readFileSync(templatePath, "binary");
 
           const zip = new PizZip(content);
@@ -58,7 +58,7 @@ app.get('/generate/:cpf', async (request, reply) => {
           doc.render(replacements);
 
           const docxBuffer = doc.getZip().generate({ type: "nodebuffer" });
-          const tempFilePath = path.join(process.cwd(), "/tmp", "DIRF2025.docx");
+          const tempFilePath = path.join(process.cwd(), "src", "/tmp", "DIRF2025.docx");
           fs.writeFileSync(tempFilePath, docxBuffer);
 
           const pdfBuffer = await new Promise((resolve, reject) => {

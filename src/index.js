@@ -1,5 +1,5 @@
-import express from 'express'
-import { getDados } from './generate'
+const express = require('express')
+const { getDados } = require('./generate')
 
 const app = express()
 const port = 3000

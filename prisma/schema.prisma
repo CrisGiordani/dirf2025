@@ -1,0 +1,18 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model fucae_irpf {
+  id            Int      @id @default(autoincrement())
+  nome          String
+  cpf           String   @unique
+  bruto         Float
+  irpf          Float
+
+  @@map("fucae_irpf")
+}

@@ -14,7 +14,7 @@ const port = 3000
 
 const prisma = new PrismaClient();
 
-app.use(cors)
+app.use(cors())
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -85,8 +85,6 @@ app.get('/generate/:cpf', async (request, reply) => {
       return reply.status(400).send({ message: "CPF is required" });
       }
 })
-
-
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

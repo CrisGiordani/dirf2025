@@ -6,12 +6,15 @@ const PizZip = require("pizzip");
 const Docxtemplater = require("docxtemplater");
 const libreConvert = require("libreoffice-convert");
 const { PrismaClient } = require("@prisma/client");
+const cors  = require("cors");
 const { z } = require("zod");
 
 const app = express()
 const port = 3000
 
 const prisma = new PrismaClient();
+
+app.use(cors)
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -43,6 +46,7 @@ app.get('/generate/:cpf', async (request, reply) => {
           }
 
           const templatePath = path.join(process.cwd(), "src", "/tmp", "DIRF2025.docx");
+
           const content = fs.readFileSync(templatePath, "binary");
 
           const zip = new PizZip(content);
@@ -58,7 +62,7 @@ app.get('/generate/:cpf', async (request, reply) => {
           doc.render(replacements);
 
           const docxBuffer = doc.getZip().generate({ type: "nodebuffer" });
-          const tempFilePath = path.join(process.cwd(), "src", "/tmp", "DIRF2025.docx");
+          const tempFilePath = path.join(process.cwd(), "src", "/tmp", `DIRF2025-${cpf}.docx`);
           fs.writeFileSync(tempFilePath, docxBuffer);
 
           const pdfBuffer = await new Promise((resolve, reject) => {
@@ -70,7 +74,7 @@ app.get('/generate/:cpf', async (request, reply) => {
 
           fs.unlinkSync(tempFilePath);
 
-          reply.header("Content-Disposition", `attachment; filename=DIRF2025-FUCAE.pdf`);
+          reply.header("Content-Disposition", `attachment; filename=DIRF2025-${cpf}-FUCAE.pdf`);
           reply.header("Content-Type", "application/pdf");
 
           return reply.send(pdfBuffer);
@@ -81,6 +85,8 @@ app.get('/generate/:cpf', async (request, reply) => {
       return reply.status(400).send({ message: "CPF is required" });
       }
 })
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
